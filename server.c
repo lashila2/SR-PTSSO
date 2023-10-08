@@ -51,7 +51,7 @@ static void* thread_recv(void *arg)
     while (1)
     {
         memset(buf, 0, sizeof(buf));
-        int rv = recv(sd, buf, sizeof(buf), 0); //是阻塞的
+        int rv = recv(sd, buf, sizeof(buf), 0); //
         if (rv < 0)
         {
             printf("recv error:%s \n", strerror(errno));
