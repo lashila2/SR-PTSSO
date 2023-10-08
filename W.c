@@ -366,7 +366,7 @@ int run_W(int listenport, int listenport2,char *ip_str, int serverport)
         {
             return ERRORCODE;
         }
-        //初始化成功
+        //
         printf("server start \n");
         strcpy(ps.message.req.pld,"-----------Standing by!----------");
         if (pthread_create(&send_thrd, NULL, thread_send1, &ps) != 0) //
