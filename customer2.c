@@ -39,15 +39,15 @@ static void *thread_recv(void *arg)
         int rv = recv(sd, buf, sizeof(buf), 0);
         if (rv <= 0)
         {
-            if(rv == 0) //server socket关闭情况
+            if(rv == 0) //server socket
             {
                 printf("server have already full !\n");
-                exit(0);//退出整个客服端
+                exit(0);//
             }
             printf("recv error:%s \n", strerror(errno));
             break;
         }
-        printf("%s", buf);//输出接收到的内容
+        printf("%s", buf);//
     }
     return NULL;
 }
@@ -56,7 +56,7 @@ int run_client(char *ip_str, int port)
     int client_sd;
     int con_rv;
     pthread_t thrd1, thrd2;
-    struct sockaddr_in client_sockaddr; //定义IP地址结构
+    struct sockaddr_in client_sockaddr; //
     client_sd = socket(AF_INET, SOCK_STREAM, 0);
     if (client_sd == -1)
     {
@@ -64,12 +64,12 @@ int run_client(char *ip_str, int port)
         return ERRORCODE;
     }
     memset(&client_sockaddr, 0, sizeof(client_sockaddr));
-    client_sockaddr.sin_port = htons(port); //指定一个端口号并将hosts字节型传化成Inet型字节型（大端或或者小端问题）
-    client_sockaddr.sin_family = AF_INET; //设置结构类型为TCP/IP
-    client_sockaddr.sin_addr.s_addr = inet_addr(ip_str);//将字符串的ip地址转换成int型,客服端要连接的ip地址
+    client_sockaddr.sin_port = htons(port); //
+    client_sockaddr.sin_family = AF_INET; //
+    client_sockaddr.sin_addr.s_addr = inet_addr(ip_str);//
     con_rv = connect(client_sd, (struct sockaddr*) &client_sockaddr,
                      sizeof(client_sockaddr));
-    //调用connect连接到指定的ip地址和端口号,建立连接后通过socket描述符通信
+    //
     if (con_rv == -1)
     {
         printf("connect error:%s \n", strerror(errno));
@@ -85,7 +85,7 @@ int run_client(char *ip_str, int port)
         printf("thread error:%s \n", strerror(errno));
         return ERRORCODE;
     }
-    pthread_join(thrd2, NULL);// 等待线程退出
+    pthread_join(thrd2, NULL);// 
     pthread_join(thrd1, NULL);
     close(client_sd);
     return 0;
