@@ -1,59 +1,4 @@
 
-/******************************************************************************
-
-                  版权所有 (C), 2023-2023，刘欣予
-
- ******************************************************************************
-  文 件 名   : Global.c
-  版 本 号   : 初稿
-  作    者   : 刘欣予
-  生成日期   : 2023/5/25
-  最近修改   :
-  功能描述   : 
-  函数列表   :
-  修改历史   :
-  1.日    期   : 2023/5/25
-    作    者   : 刘欣予
-    修改内容   : 创建文件
-
-******************************************************************************/
-
-/*----------------------------------------------*
- * 包含头文件                                   *
- * #include "Global.h"
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 外部变量说明                                 *
- * PublicParameter PP;
- * int q_E;
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 外部函数原型说明                             *
- * void Sig();//签名
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 内部函数原型说明                             *
- * void initPP();
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 全局变量                                     *
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 模块级变量                                   *
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 常量定义                                     *
- *----------------------------------------------*/
-
-/*----------------------------------------------*
- * 宏定义                                       *
- *----------------------------------------------*/
 #include "Global.h"
 #include "string.h"
 #include "stdio.h"
@@ -61,23 +6,8 @@
 
 PublicParameter PP;
 
-extern void Sig();//签名
+extern void Sig();//
 
-/*****************************************************************************
- 函 数 名  : initPP
- 功能描述  : 生成公共参数
- 输入参数  : 自定义变量类型PublicParameter指针和字符串
- 输出参数  : 自定义变量类型PublicParameter指针PP
- 返 回 值  : 无
- 调用函数  :
- 被调函数  :
-
- 修改历史      :
-  1.日    期   : 2023/5/25
-    作    者   : liuxinyu
-    修改内容   : 新生成函数
-
-*****************************************************************************/
 char *param = "type a\n"
               "q 8780710799663312522437781984754049815806883199414208211028653399266475630880222957078625179422662221423155858769582317459277713367317481324925129998224791\n"
               "h 12016012264891146079388821366740534204802954401251311822919615131047207289359704531102844802183906537786776\n"
@@ -231,9 +161,9 @@ void SecretShare(element_t s,int n,int t,pairing_t pairing){
 void genshare(element_t secret,int n,int t,element_t *result,pairing_t pairing)
 {
 
-    element_t *a;//多项式系数a0....a(t-1)
+    element_t *a;//
     a = (element_t*)malloc(sizeof(element_t) * (t));
-    element_t *share;//分享的密钥
+    element_t *share;//
     share = (element_t*)malloc(sizeof(element_t) * (n));
 
     //element_printf("secret in = %B\n",secret);
@@ -251,16 +181,16 @@ void genshare(element_t secret,int n,int t,element_t *result,pairing_t pairing)
         //element_printf("a[%d] = %B\n",i,a[i]);
     }
 
-    for(int i=0;i<n;i++)//share初始化
+    for(int i=0;i<n;i++)//
     {
         element_init_Zr(share[i],pairing);
         element_set(share[i],a[0]);
         //element_printf("share[%d] = %B\n",i,share[i]);
     }
 
-    for(int i=1;i<=n;i++)//计算share0...4 sharei对应x=i+1
+    for(int i=1;i<=n;i++)//
     {
-        element_t tmp;//存储x ... x^(t-1)
+        element_t tmp;//
         element_t x;
 
         element_init_Zr(tmp,pairing);
@@ -270,7 +200,7 @@ void genshare(element_t secret,int n,int t,element_t *result,pairing_t pairing)
 
         for(int j =1;j<t;j++)
         {
-            element_t tmp1;//存储a[j]*x^j
+            element_t tmp1;//
             element_t xpowj;
             element_t jz;
 
@@ -287,7 +217,7 @@ void genshare(element_t secret,int n,int t,element_t *result,pairing_t pairing)
             element_set0(tmp1);
         }
     }
-    for(int i=0;i<n;i++)//赋值
+    for(int i=0;i<n;i++)//
     {
         element_init_Zr(result[i],pairing);
         element_set(result[i],share[i]);
@@ -305,7 +235,7 @@ void random_select(int* result)
     for (int i = 0; i < n; i++) {
         result[i] = i;
     }
-    // 随机交换数组中的元素
+    // 
     srand(time(NULL));
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
@@ -313,7 +243,7 @@ void random_select(int* result)
         result[i] = result[j];
         result[j] = temp;
     }
-    // 返回前 t 个元素
+    // 
     for (int i = 0; i < t; i++) {
         printf("%d ", result[i]);
     }
@@ -380,7 +310,7 @@ void recover_secret(element_t* s,element_t *result,pairing_t pairing)
 //    int shareid[3] = {3,2,1};
     int shareid[t];
 //    shareid = (int*) malloc(sizeof(int)*t);
-    printf("选择的%d个用于计算w的服务器为:\n",t);
+    printf("severs:\n",t);
     random_select(&shareid);
 //    for(int i=0;i<t;i++)
 //    {
@@ -442,7 +372,7 @@ void recover_secret(element_t* s,element_t *result,pairing_t pairing)
 void recover_secretG(element_t* s,element_t *result,pairing_t pairing)
 {
     int shareid[n];
-//    printf("选择的%d个用于计算w的服务器为:\n",t);
+//    printf("severs:\n",t);
     random_select(&shareid);
     element_t *l;
     l = (element_t *) malloc(sizeof(element_t)*t);
@@ -468,7 +398,7 @@ void recover_secretG(element_t* s,element_t *result,pairing_t pairing)
 //    element_printf("wl %B\n",wl[2]);
 
 
-    element_t *w_compute;//w_c[0]存w1w2,w_c[1]存w1w2w3....w_c[t-2]存最终结果
+    element_t *w_compute;//
     w_compute = (element_t*)malloc(sizeof(element_t) * (t-1));
     element_init_G1(w_compute[0],pairing);
     element_add(w_compute[0],wl[0],wl[1]);
