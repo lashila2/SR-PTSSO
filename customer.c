@@ -39,15 +39,15 @@ static void *thread_recv(void *arg)
         int rv = recv(sd, buf, sizeof(buf), 0);
         if (rv <= 0)
         {
-            if(rv == 0) //server socket关闭情况
+            if(rv == 0) //server socket
             {
                 printf("server have already full !\n");
-                exit(0);//退出整个客服端
+                exit(0);//
             }
             printf("recv error:%s \n", strerror(errno));
             break;
         }
-        printf("%s", buf);//输出接收到的内容
+        printf("%s", buf);//
     }
     return NULL;
 }
@@ -56,7 +56,7 @@ int run_client(char *ip_str, int port)
     int client_sd;
     int con_rv;
     pthread_t thrd1, thrd2;
-    struct sockaddr_in client_sockaddr; //定义IP地址结构
+    struct sockaddr_in client_sockaddr; //
     client_sd = socket(AF_INET, SOCK_STREAM, 0);
     if (client_sd == -1)
     {
@@ -85,7 +85,7 @@ int run_client(char *ip_str, int port)
         printf("thread error:%s \n", strerror(errno));
         return ERRORCODE;
     }
-    pthread_join(thrd2, NULL);// 等待线程退出
+    pthread_join(thrd2, NULL);// 
     pthread_join(thrd1, NULL);
     close(client_sd);
     return 0;
