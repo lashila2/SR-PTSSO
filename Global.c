@@ -345,7 +345,7 @@ void recover_secret(element_t* s,element_t *result,pairing_t pairing)
 //    element_printf("wl %B\n",wl[2]);
 
 
-    element_t *w_compute;//w_c[0]存w1w2,w_c[1]存w1w2w3....w_c[t-2]存最终结果
+    element_t *w_compute;//
     w_compute = (element_t*)malloc(sizeof(element_t) * (t-1));
     element_init_Zr(w_compute[0],pairing);
     element_add(w_compute[0],wl[0],wl[1]);
