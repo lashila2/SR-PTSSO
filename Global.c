@@ -231,7 +231,7 @@ void genshare(element_t secret,int n,int t,element_t *result,pairing_t pairing)
 
 void random_select(int* result)
 {
-    // 初始化数组
+    //
     for (int i = 0; i < n; i++) {
         result[i] = i;
     }
