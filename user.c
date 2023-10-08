@@ -117,7 +117,7 @@ int run_client(char *ip_str, int port,int port2)
     element_pow_zn(pw_, hash,r);
     element_clear(hash);
 //    element_printf("tpk = %B\n",tpk);
-    //构造消息结构体
+    //
     Req req;
     memset(req.ID,0, 64* sizeof(char));
     memset(req.pld,0, 64* sizeof(char));
@@ -144,7 +144,7 @@ int run_client(char *ip_str, int port,int port2)
 //        element_printf("vi = %B\n",vi[i]);
     }
 
-//初始化用户
+//
     int client_sd;
     int con_rv;
     pthread_t thrd1, thrd2;
