@@ -41,7 +41,7 @@ int main() {
     element_printf("%B\n",secret);
     genshare(secret,n,t,result,PP.pairing);
 //    recover_secret(&s,result,PP.pairing);
-//生成psk
+//
     element_t psk,ppk;
     element_t h_pw,kh;
     element_init_G1(ppk,PP.pairing);
@@ -51,7 +51,7 @@ int main() {
     element_pow_zn(kh,h_pw,secret);
     H1(&psk,kh,"lashila");
     element_printf("kh = %B\n",kh);
-//生成ppk
+//
     element_pow_zn(ppk,PP.P,psk);
     element_printf("psk = %B\n",psk);
     element_printf("ppk = %B\n",ppk);
