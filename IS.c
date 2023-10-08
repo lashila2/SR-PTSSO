@@ -73,17 +73,17 @@ static void* thread_recv(void *arg)
     while (1)
     {
         memset(buf, 0, sizeof(buf));
-        int rv = recv(sd, buf, sizeof(buf), 0); //是阻塞的
+        int rv = recv(sd, buf, sizeof(buf), 0); //
         if (rv < 0)
         {
             printf("recv error:%s \n", strerror(errno));
             break;
         }
-        if (rv == 0) // 这种情况说明client已经关闭socket连接
+        if (rv == 0) // 
         {
             break;
         }
-        printf("%s", buf); //输出接受到内容
+        printf("%s", buf); //
     }
     pthread_cancel(thrd);
     pthread_mutex_lock(&mutex);
@@ -102,18 +102,18 @@ static void* thread_recv1(void *arg)
     while (1)
     {
         memset(buf, 0, sizeof(buf));
-        int rv = recv(sd, buf, sizeof(message1), 0); //是阻塞的
+        int rv = recv(sd, buf, sizeof(message1), 0); //
         memcpy(&message1,buf, sizeof(message1));
         if (rv < 0)
         {
             printf("recv error:%s \n", strerror(errno));
             break;
         }
-        if (rv == 0) // 这种情况说明client已经关闭socket连接
+        if (rv == 0) //
         {
             break;
         }
-        printf("%s\n", message1.req.ID); //输出接受到内容
+        printf("%s\n", message1.req.ID); //
 //        element_printf("%B\n",message.req.pw_);
         break;
     }
@@ -128,30 +128,30 @@ static int create_listen(int port)
 {
 
     int listen_st;
-    struct sockaddr_in sockaddr; //定义IP地址结构
+    struct sockaddr_in sockaddr; //
     int on = 1;
-    listen_st = socket(AF_INET, SOCK_STREAM, 0); //初始化socket
+    listen_st = socket(AF_INET, SOCK_STREAM, 0); //
     if (listen_st == -1)
     {
         printf("socket create error:%s \n", strerror(errno));
         return ERRORCODE;
     }
-    if (setsockopt(listen_st, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) == -1) //设置ip地址可重用
+    if (setsockopt(listen_st, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) == -1) //
     {
         printf("setsockopt error:%s \n", strerror(errno));
         return ERRORCODE;
     }
-    sockaddr.sin_port = htons(port); //指定一个端口号并将hosts字节型传化成Inet型字节型（大端或或者小端问题）
-    sockaddr.sin_family = AF_INET;    //设置结构类型为TCP/IP
-    sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);    //服务端是等待别人来连，不需要找谁的ip
-    //这里写一个长量INADDR_ANY表示server上所有ip，这个一个server可能有多个ip地址，因为可能有多块网卡
+    sockaddr.sin_port = htons(port); //
+    sockaddr.sin_family = AF_INET;    //
+    sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);    //
+    //
     if (bind(listen_st, (struct sockaddr *) &sockaddr, sizeof(sockaddr)) == -1)
     {
         printf("bind error:%s \n", strerror(errno));
         return ERRORCODE;
     }
 
-    if (listen(listen_st, 5) == -1) //     服务端开始监听
+    if (listen(listen_st, 5) == -1) //     
     {
         printf("listen error:%s \n", strerror(errno));
         return ERRORCODE;
@@ -162,12 +162,12 @@ static int create_listen(int port)
 int accept_socket(int listen_st)
 {
     int accept_st;
-    struct sockaddr_in accept_sockaddr; //定义accept IP地址结构
+    struct sockaddr_in accept_sockaddr; //
     socklen_t addrlen = sizeof(accept_sockaddr);
     memset(&accept_sockaddr, 0, addrlen);
     accept_st = accept(listen_st, (struct sockaddr*) &accept_sockaddr,&addrlen);
-    //accept 会阻塞直到客户端连接连过来 服务端这个socket只负责listen 是不是有客服端连接过来了
-    //是通过accept返回socket通信的
+    //
+    //
     if (accept_st == -1)
     {
         printf("accept error:%s \n", strerror(errno));
@@ -192,7 +192,7 @@ int run_server(int port)
     fp = fopen("si.txt", "rb+");
     fread(si1, sizeof(char)*128,n,fp);
     fclose(fp);
-    int listen_st = create_listen(port);    //创建监听socket
+    int listen_st = create_listen(port);    //
     pthread_t send_thrd, recv_thrd;
     struct pthread_socket ps;
     int accept_st;
@@ -203,7 +203,7 @@ int run_server(int port)
     printf("server start \n");
     while (1)
     {
-        accept_st = accept_socket(listen_st); //获取连接的的socket
+        accept_st = accept_socket(listen_st); //
         if (accept_st == -1)
         {
             return ERRORCODE;
@@ -219,12 +219,12 @@ int run_server(int port)
         pthread_mutex_unlock(&mutex);
         ps.socket_d = accept_st;
         ps.thrd = send_thrd;
-        if (pthread_create(&recv_thrd, NULL, thread_recv1, &ps) != 0)//创建接收信息线程
+        if (pthread_create(&recv_thrd, NULL, thread_recv1, &ps) != 0)//
         {
             printf("create thread error:%s \n", strerror(errno));
             break;
         }
-//        pthread_detach(recv_thrd); //设置线程为可分离，这样的话，就不用pthread_join
+//        pthread_detach(recv_thrd); //
         pthread_join(recv_thrd,NULL);
 
         start = clock();
@@ -304,16 +304,16 @@ int run_server(int port)
         ps.message.res = res;
         end = clock();
         totalTime = (double)(end-start)/CLOCKS_PER_SEC;
-        printf( "IS耗时：%f \n", totalTime*1000);
+        printf( "IS time：%f \n", totalTime*1000);
 
 
-        if (pthread_create(&send_thrd, NULL, thread_send1, &ps) != 0) //创建发送信息线程
+        if (pthread_create(&send_thrd, NULL, thread_send1, &ps) != 0) //
         {
             printf("create thread error:%s \n", strerror(errno));
             break;
 
         }
-//        pthread_detach(send_thrd);        //设置线程可分离性，这样的话主线程就不用join
+//        pthread_detach(send_thrd);        //
         pthread_join(send_thrd,NULL);
         close(accept_st);
     }
