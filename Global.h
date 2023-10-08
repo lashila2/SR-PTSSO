@@ -11,7 +11,7 @@
 
 typedef struct{
     element_t P;
-    pairing_t pairing;//pairing中包含了G和GT
+    pairing_t pairing;//
 } PublicParameter;
 
 typedef struct {
@@ -60,13 +60,13 @@ extern PublicParameter PP;
 extern char* param;
 
 extern int t,n;
-// e h h_1 H 也由pairing实现
+// e h h_1 H 
 extern int q_E;
 
-extern int num;//存放拥有相同文件user的个数
+extern int num;//
 
 
-extern void Sig();//签名
+extern void Sig();//
 
 void initPP(PublicParameter *PP,char* param);
 
