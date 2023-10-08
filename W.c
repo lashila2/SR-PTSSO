@@ -257,7 +257,7 @@ int run_W(int listenport, int listenport2,char *ip_str, int serverport)
         element_printf("tpk* = %B\n",tpk_);
         end = clock();
         totalTime1 = (double)(end-start)/CLOCKS_PER_SEC;
-        printf( "wu第一阶段耗时：%f \n", totalTime1*1000);
+        printf( "wu time：%f \n", totalTime1*1000);
 
 //W->IS
 
@@ -336,7 +336,7 @@ int run_W(int listenport, int listenport2,char *ip_str, int serverport)
 //            element_printf("C2_ = %B\n",C2_);
             end = clock();
             totalTime3 = (double)(end-start)/CLOCKS_PER_SEC;
-            printf( "wis耗时：%f \n", totalTime3*1000);
+            printf( "wis time：%f \n", totalTime3*1000);
 
             start = clock();
             element_t sigmai_,sigmai;
@@ -351,10 +351,10 @@ int run_W(int listenport, int listenport2,char *ip_str, int serverport)
             element_to_bytes_compressed(res[i].sigmai,sigmai);
             end = clock();
             totalTime2 = (double)(end-start)/CLOCKS_PER_SEC;
-            printf( "wu第二阶段耗时：%f \n", totalTime2*1000);
+            printf( "wu time：%f \n", totalTime2*1000);
 
             totalTime1 = totalTime1+totalTime2;
-            printf( "wu耗时：%f \n", totalTime1*1000);
+            printf( "wu time：%f \n", totalTime1*1000);
 
         }
 //
@@ -410,7 +410,7 @@ int run_W(int listenport, int listenport2,char *ip_str, int serverport)
             }
 //        pthread_detach(send_thrd);        //
             pthread_join(send_thrd2,NULL);
-            close(accept_st2);//关闭之前的接口
+            close(accept_st2);//
         }
 
 
