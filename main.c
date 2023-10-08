@@ -143,7 +143,7 @@ int main() {
     element_printf("temp2 = %B\n",tmp2);
     printf("%s\n",string);
     printf("%d,\n", sizeof(element_t));
-//初始化IS
+
 //    int IS_listenfd[n];
 //    for (int i = 0; i < n; ++i) {
 //        IS_listenfd[i] = initIS(5100+i);
